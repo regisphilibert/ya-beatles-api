@@ -1,0 +1,13 @@
+{{ $name := plainify . }}
+{{ $name = replace $name " /" "" }}
+{{ $names := dict
+  "McCartney" "Paul McCartney" 
+  "Lennon" "John Lennon"
+  "Harrison" "George Harrison"
+  "Starr" "Ringo Starr"
+}}
+{{ with index $names . }}
+  {{ $name = . }}
+{{ end }}
+
+{{ return $name }}

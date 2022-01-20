@@ -1,0 +1,16 @@
+{{ with site.Data.songs }}
+  {{ range . }}
+    {{ $song := dict
+      "title" .name
+      "songwriters" (apply (split .songwriters ", ") "partial" "parse_gent" ".")
+      "lead_vocals" (apply (split .lead_vocal ", ") "partial" "parse_gent" ".")
+      "year" .year
+      "refs" (apply (split .ref ", ") "int" ".")
+    }}
+    {{ $filename := printf "songs/%s.md" (replace .name "/" "-" | urlize) }}
+    {{ $string := print (jsonify $song) }}
+    {{ $file := $string | resources.FromString $filename }}
+    {{ $output := $file.RelPermalink }}
+  {{ end }}
+{{ end }}
+{{ return true }}

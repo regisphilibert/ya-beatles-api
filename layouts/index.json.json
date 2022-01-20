@@ -1,0 +1,3 @@
+{{ $endpoints := slice }}
+{{ $endpoints = $endpoints | append (site.GetPage "/songs").RelPermalink }}
+{{ dict "endpoints" $endpoints | jsonify }}

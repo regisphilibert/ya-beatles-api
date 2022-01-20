@@ -1,0 +1,17 @@
+{{ $s := newScratch }}
+{{ $s.Set "data" dict }}
+
+{{ $s.SetInMap "data" "name" .Title }}
+{{ $s.SetInMap "data" "url" .RelPermalink }}
+{{ range $key := slice 
+  "songwriters"
+  "lead_vocals"
+  "year"
+  "refs" 
+}}
+  {{ with index $.Params $key }}
+    {{ $s.SetInMap "data" $key . }}
+  {{ end }}
+{{ end }}
+
+{{ return $s.Get "data" }}

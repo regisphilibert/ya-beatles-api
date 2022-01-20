@@ -1,0 +1,1 @@
+{{ apply .Pages "partial" (printf "transformers/%s" .Type) "." | jsonify }}

@@ -1,0 +1,5 @@
+mounts:
+  - source: content
+    target: content
+  - source: generate/public/songs
+    target: content/songs
