@@ -1,13 +1,14 @@
 {{ with site.Data.songs }}
   {{ range . }}
+    {{ $name := plainify .name }}
     {{ $song := dict
-      "title" .name
+      "title" $name
       "songwriters" (apply (split .songwriters ", ") "partial" "parse_gent" ".")
       "lead_vocals" (apply (split .lead_vocal ", ") "partial" "parse_gent" ".")
       "year" .year
       "refs" (apply (split .ref ", ") "int" ".")
     }}
-    {{ $basename := .name }}
+    {{ $basename := $name }}
     {{ range slice "/" "#" "?" }}
       {{ if in $basename . }}
         {{ $basename = replace $basename . "-" }}
