@@ -7,7 +7,13 @@
       "year" .year
       "refs" (apply (split .ref ", ") "int" ".")
     }}
-    {{ $filename := printf "songs/%s.md" (replace .name "/" "-" | urlize) }}
+    {{ $basename := .name }}
+    {{ range slice "/" "#" "?" }}
+      {{ if in $basename . }}
+        {{ $basename = replace $basename . "-" }}
+      {{ end }}
+    {{ end }}
+    {{ $filename := printf "songs/%s.md" ($basename | urlize) }}
     {{ $string := print (jsonify $song) }}
     {{ $file := $string | resources.FromString $filename }}
     {{ $output := $file.RelPermalink }}
